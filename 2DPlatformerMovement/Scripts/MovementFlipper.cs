@@ -12,8 +12,11 @@ namespace CyberBuggy.Movement
 
         private void Update()
         {
+            if(_platformerMovement.CurrentDirection.x == 0)
+                return;
+            
             var wasFlipped = _isFlipped;
-            _isFlipped = _platformerMovement.Velocity.x < 0;
+            _isFlipped = _platformerMovement.CurrentDirection.x < 0;
 
             if (wasFlipped == _isFlipped)
                 return;

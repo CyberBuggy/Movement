@@ -1,7 +1,10 @@
 using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
+#if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
+#endif
 
 namespace CyberBuggy.Movement
 {
@@ -40,6 +43,8 @@ namespace CyberBuggy.Movement
         [SerializeField] private bool _enableJumpingGizmos;
         public Vector2 Velocity {get => _rigidbody.velocity;}
         public bool IsGrounded {get => _isGrounded;}
+        public Vector2 CurrentDirection { get => _currentDirection; set => _currentDirection = value; }
+
         private Vector2 _currentDirection;
         private bool _isGrounded;
         private float _isGroundedBuffer;
@@ -72,6 +77,8 @@ namespace CyberBuggy.Movement
         public void SetJumpInput(bool isHoldingJump)
         {
             _isHoldingJump = isHoldingJump;
+            if(_isHoldingJump)
+                _isJumpingBuffer = _jumpBufferThreshold; 
         }
         private void Update()
         {
@@ -180,5 +187,6 @@ namespace CyberBuggy.Movement
                 Gizmos.DrawWireSphere(_groundCheckPoint.position, _groundCheckRadius);
             }
         }
+
     }
 }
